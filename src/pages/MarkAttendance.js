@@ -47,6 +47,13 @@ const MarkAttendance = () => {
     }
   };
 
+  const getStatusColor = () => {
+    if (attendanceStatus === 'Attendance already marked for today') {
+      return 'green'; // Green color for this specific status
+    }
+    return 'red'; // Red color for other statuses
+  };
+
   return (
     <Container
       component="main"
@@ -56,8 +63,24 @@ const MarkAttendance = () => {
       <Typography variant="h4" component="h1" gutterBottom>
         Mark Attendance
       </Typography>
-      <Box textAlign="center" mb={4}>
-        <Typography variant="body1" paragraph>
+      <Box 
+        textAlign="center" 
+        mb={4} 
+        style={{ 
+          backgroundColor: 'rgba(255, 255, 255, 0.8)', // Transparent background
+          borderRadius: '8px', 
+          padding: '16px', 
+          width: '100%', 
+          maxWidth: '400px', // Optional: to control container width
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Shadow effect
+          marginTop: '1rem' // Margin to push container away from elements
+        }}
+      >
+        <Typography
+          variant="body1"
+          paragraph
+          style={{ color: getStatusColor(), textAlign: 'center' }}
+        >
           {attendanceStatus ? attendanceStatus : 'Checking attendance status...'}
         </Typography>
       </Box>
@@ -69,14 +92,14 @@ const MarkAttendance = () => {
       >
         Mark Attendance
       </Button>
-      <Box mt={6}> {/* Increased top margin to push button lower */}
+      <Box mt={6}> {}
         <Button
           onClick={() => navigate('/dashboard')}
           variant="outlined"
           style={{ 
             color: 'black', 
             borderColor: 'black', 
-            width: '120px', 
+            width: '250px', 
             padding: '4px 8px', 
             fontSize: '0.75rem' 
           }}

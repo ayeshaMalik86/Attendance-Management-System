@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Dashboard = () => {
   const buttonStyle = {
     margin: '5px 0', // Reduced margin for less space between buttons
-    width: '250px'   // Fixed width for all buttons
+    width: '250px',  // Fixed width for all buttons
   };
 
   return (
@@ -26,12 +26,12 @@ const Dashboard = () => {
         <Grid item>
           <Button
             component={Link}
-            to="/attendance"
+            to="/mark-attendance"
             variant="contained"
-            color="primary"
+            color="success"
             style={buttonStyle}
           >
-            Access Attendance
+            Mark Attendance
           </Button>
         </Grid>
         <Grid item>
@@ -46,25 +46,14 @@ const Dashboard = () => {
           </Button>
         </Grid>
         <Grid item>
-        <Button
-            component={Link}
-            to="/attendance-records" // Updated path to match new route
-            variant="outlined"
-            color="primary"
-            style={buttonStyle}
-          >
-            View Attendance Records
-          </Button>
-        </Grid>
-        <Grid item>
           <Button
             component={Link}
-            to="/mark-attendance"
+            to="/attendance-records"
             variant="contained"
-            color="success"
-            style={buttonStyle}
+            color="primary" // Set to "primary" for blue background
+            style={{ ...buttonStyle, color: '#fff' }} // Override text color to white
           >
-            Mark Attendance
+            View Attendance Records
           </Button>
         </Grid>
         <Grid item>
