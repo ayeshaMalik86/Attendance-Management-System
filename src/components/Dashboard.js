@@ -3,6 +3,11 @@ import { Container, Typography, Box, Button, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
+  const buttonStyle = {
+    margin: '5px 0', // Reduced margin for less space between buttons
+    width: '250px'   // Fixed width for all buttons
+  };
+
   return (
     <Container
       component="main"
@@ -17,40 +22,60 @@ const Dashboard = () => {
           Welcome to the Dashboard. Here you can access various features.
         </Typography>
       </Box>
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} sm={6} md={4}>
+      <Grid container spacing={1} direction="column" alignItems="center"> {/* Vertical layout */}
+        <Grid item>
           <Button
             component={Link}
             to="/attendance"
             variant="contained"
             color="primary"
-            fullWidth
-            sx={{ mb: 2 }}
+            style={buttonStyle}
           >
             Access Attendance
           </Button>
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid item>
           <Button
             component={Link}
             to="/leave-requests"
             variant="contained"
             color="secondary"
-            fullWidth
-            sx={{ mb: 2 }}
+            style={buttonStyle}
           >
             Leave Requests
           </Button>
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <Button
+        <Grid item>
+        <Button
             component={Link}
-            to="/attendance-record"
+            to="/attendance-records" // Updated path to match new route
             variant="outlined"
             color="primary"
-            fullWidth
+            style={buttonStyle}
           >
             View Attendance Records
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            component={Link}
+            to="/mark-attendance"
+            variant="contained"
+            color="success"
+            style={buttonStyle}
+          >
+            Mark Attendance
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            component={Link}
+            to="/update-profile"
+            variant="outlined"
+            color="info"
+            style={buttonStyle}
+          >
+            Update Profile
           </Button>
         </Grid>
       </Grid>

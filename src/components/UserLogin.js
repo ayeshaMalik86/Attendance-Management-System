@@ -8,7 +8,7 @@ const UserLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +23,12 @@ const UserLogin = () => {
       }
       const { token } = response.data;
 
-      // Decode token to check role
+      // Decode token to get userId and role
       const decoded = jwtDecode(token);
       if (decoded.role === 'admin') {
         setError('Invalid credentials'); // Set error message for user trying to login as admin
       } else {
+        localStorage.setItem('userId', decoded.id); // Store userId in localStorage
         navigate('/dashboard'); // Redirect to user dashboard
       }
     } catch (err) {

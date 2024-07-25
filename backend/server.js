@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authRoutes = require('./models/routes/auth'); // Correct path to auth.js
+const authRoutes = require('./models/routes/auth'); // Correct path
+const attendanceRoutes = require('./models/routes/attendance'); // Correct path
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json()); // Middleware to parse JSON requests
 
 // Use the routes
 app.use('/api/auth', authRoutes);
+app.use('/api/attendance', attendanceRoutes); // Add attendance routes
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://afomalik86:haalim123@cluster0.9tcmqrw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
