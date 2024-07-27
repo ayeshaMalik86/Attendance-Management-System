@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const Attendance = require('../../models/Attendance'); // Ensure this path is correct
-const User = require('../../models/user'); // Ensure the path is correct
+const User = require('../../models/User'); // Ensure the path is correct
 
 // Check if attendance has been marked for today
 router.get('/check', async (req, res) => {
