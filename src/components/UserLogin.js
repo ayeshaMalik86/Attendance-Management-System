@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; 
-import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import {jwtDecode} from 'jwt-decode'; 
+import { Container, Typography, TextField, Button, Box, Link } from '@mui/material'; // Imported Link from @mui/material
 import { useNavigate } from 'react-router-dom';
 
 const UserLogin = () => {
@@ -28,7 +28,8 @@ const UserLogin = () => {
       if (decoded.role === 'admin') {
         setError('Invalid credentials'); // Set error message for user trying to login as admin
       } else {
-        localStorage.setItem('userId', decoded.id); // Store userId in localStorage
+        localStorage.setItem('userId', decoded.id);
+        localStorage.setItem('username', decoded.username); // Store userId in localStorage
         navigate('/dashboard'); // Redirect to user dashboard
       }
     } catch (err) {
@@ -79,9 +80,27 @@ const UserLogin = () => {
           Login
         </Button>
         {error && <Typography color="error" variant="body2" style={{ marginTop: '1rem' }}>{error}</Typography>}
+        <Box mt={2} textAlign="center"> {/* Added Box for spacing and centering */}
+          <Typography variant="body2">
+            Don’t have an account?{' '}
+            <Link href="/register" underline="hover" color="primary">
+              Register now
+            </Link>
+          </Typography>
+        </Box>
+        <Box mt={2} textAlign="center"> {/* Added Box for spacing and centering */}
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => navigate('/')}
+            style={{ width: '100%' }} // Ensure button is full width
+          >
+            Back to Home
+          </Button>
+        </Box>
       </Box>
     </Container>
   );
-}
+};
 
 export default UserLogin;

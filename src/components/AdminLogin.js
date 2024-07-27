@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, TextField, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; 
+import {jwtDecode} from 'jwt-decode'; // Correct import for jwt-decode
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -30,6 +30,11 @@ const AdminLogin = () => {
       console.error(err.response.data.error);
       setError(err.response.data.error || 'An error occurred');
     }
+  };
+
+  const buttonStyle = {
+    width: '100%', // Full width to make buttons same size
+    marginTop: '1rem', // Space between buttons
   };
 
   return (
@@ -68,15 +73,24 @@ const AdminLogin = () => {
           type="submit"
           variant="contained"
           color="primary"
-          fullWidth
-          sx={{ mt: 2 }}
+          style={buttonStyle} // Apply consistent styles
         >
           Login
         </Button>
         {error && <Typography color="error" variant="body2" style={{ marginTop: '1rem' }}>{error}</Typography>}
       </Box>
+      <Box mt={2} textAlign="center">
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={() => navigate('/')}
+          style={buttonStyle} // Apply consistent styles
+        >
+          Back to Home
+        </Button>
+      </Box>
     </Container>
   );
-}
+};
 
 export default AdminLogin;

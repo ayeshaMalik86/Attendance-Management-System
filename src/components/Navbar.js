@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from 'react';
 import { AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';

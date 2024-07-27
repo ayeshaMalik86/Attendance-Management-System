@@ -12,6 +12,7 @@ import MarkAttendance from './pages/MarkAttendance';
 import AttendanceRecords from './components/AttendanceRecord';
 import LeaveRequests from './pages/LeaveRequests'; // Import LeaveRequests component
 import Layout from './components/Layout'; // Import Layout
+import Profile from './pages/Profile';
 
 const theme = createTheme({
   palette: {
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/mark-attendance" element={<ProtectedRoute element={MarkAttendance} />} />
             <Route path="/attendance-records" element={<ProtectedRoute element={AttendanceRecords} />} />
             <Route path="/leave-requests" element={<ProtectedRoute element={LeaveRequests} />} /> {/* Add LeaveRequests route */}
+            <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
           </Routes>
         </Layout>
       </Router>

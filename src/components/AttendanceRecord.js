@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, Box, CircularProgress } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const AttendanceRecord = () => {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate
 
   const fetchAttendanceRecords = async () => {
     try {
@@ -34,7 +36,7 @@ const AttendanceRecord = () => {
     <Container
       component="main"
       maxWidth="xs"
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem' }}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '2rem', paddingBottom: '5rem' }} // Added paddingBottom to ensure space for the button
     >
       <Typography variant="h5" component="h1" gutterBottom>
         Attendance Records
@@ -76,6 +78,14 @@ const AttendanceRecord = () => {
           </Box>
         )}
       </Box>
+      <Button
+        variant="outlined"
+        color="primary"
+        style={{ position: 'fixed', bottom: '1rem', left: '50%', transform: 'translateX(-50%)', width: 'auto', borderColor: '#1976d2', color: '#1976d2' }} // Style for button
+        onClick={() => navigate('/dashboard')}
+      >
+        Back to Dashboard
+      </Button>
     </Container>
   );
 };

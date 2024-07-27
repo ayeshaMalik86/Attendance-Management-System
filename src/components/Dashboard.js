@@ -59,7 +59,7 @@ const Dashboard = () => {
         <Grid item>
           <Button
             component={Link}
-            to="/update-profile"
+            to="/profile"
             variant="outlined"
             color="info"
             style={buttonStyle}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Typography, Box, Button, Grid, TextField, CircularProgress, Dialog, DialogTitle, DialogContent, DialogActions, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import axios from 'axios';
 import dayjs from 'dayjs';  // Import dayjs for date formatting
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const LeaveRequests = () => {
   const [isRequesting, setIsRequesting] = useState(false);
@@ -12,6 +13,7 @@ const LeaveRequests = () => {
   const [userId, setUserId] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [leaveStatus, setLeaveStatus] = useState([]);
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
     // Fetch userId from local storage
@@ -69,10 +71,22 @@ const LeaveRequests = () => {
     }
   };
 
+  const handleBackToDashboard = () => {
+    navigate('/dashboard'); // Navigate to dashboard
+  };
+
   const getStatusColor = (status) => {
     if (status === 'approved') return 'green';
     if (status === 'rejected') return 'red';
     return 'blue';
+  };
+
+  const buttonStyle = {
+    width: '100%', // Full width to make buttons same size
+    marginTop: '1rem', // Space between buttons
+    padding: '10px', // Consistent padding
+    fontSize: '16px', // Consistent font size
+    textTransform: 'none' // Prevents uppercase transformation for consistent appearance
   };
 
   return (
@@ -125,6 +139,7 @@ const LeaveRequests = () => {
             color="primary"
             onClick={handleRequestLeave}
             disabled={isRequesting}
+            style={buttonStyle} // Apply consistent styles
           >
             {isRequesting ? <CircularProgress size={24} /> : 'Request Leave'}
           </Button>
@@ -134,8 +149,19 @@ const LeaveRequests = () => {
             variant="outlined"
             color="secondary"
             onClick={handleCheckStatus}
+            style={buttonStyle} // Apply consistent styles
           >
             Check Leave Status
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleBackToDashboard}
+            style={buttonStyle} // Apply consistent styles
+          >
+            Back to Dashboard
           </Button>
         </Grid>
         <Grid item>
