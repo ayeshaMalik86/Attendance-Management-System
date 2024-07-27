@@ -14,6 +14,7 @@ import LeaveRequests from './pages/LeaveRequests'; // Import LeaveRequests compo
 import Layout from './components/Layout'; // Import Layout
 import Profile from './pages/Profile';
 import ManageAttendance from './components/ManageAttendance';
+import LeaveApproval from './pages/LeaveApproval';
 
 const theme = createTheme({
   palette: {
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/leave-requests" element={<ProtectedRoute element={LeaveRequests} />} /> {/* Add LeaveRequests route */}
             <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
             <Route path="/manage-attendance" element={<ProtectedRoute element={ManageAttendance} />} />
+            <Route path="/leave-approval" element={<ProtectedRoute element={LeaveApproval} />} />
           </Routes>
         </Layout>
       </Router>

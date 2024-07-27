@@ -28,7 +28,7 @@ router.post('/request', async (req, res) => {
       leaveType,
       startDate,
       endDate,
-      status: 'pending' // Ensure this matches the enum values
+      status: 'pending'
     });
 
     // Save to database
@@ -36,7 +36,7 @@ router.post('/request', async (req, res) => {
     console.log('Leave requested successfully');
     res.json({ message: 'Leave requested successfully' });
   } catch (err) {
-    console.error('Error requesting leave:', err); // Log full error object
+    console.error('Error requesting leave:', err);
     res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
@@ -49,12 +49,54 @@ router.get('/status', async (req, res) => {
   }
   try {
     const leaves = await Leave.find({ userId });
-    if (leaves.length === 0) {
-      return res.json({ message: 'No leave requests found', leaves: [] });
-    }
     res.json({ message: 'Leave requests found', leaves });
   } catch (err) {
     console.error('Error checking leave status:', err);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+// Get all leave requests
+router.get('/requests', async (req, res) => {
+  try {
+    const leaves = await Leave.find().populate('userId', 'username');
+    res.json({ message: 'Leave requests fetched successfully', leaves });
+  } catch (err) {
+    console.error('Error fetching leave requests:', err);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+// Get all pending leave requests
+router.get('/requests/pending', async (req, res) => {
+  try {
+    const leaves = await Leave.find({ status: 'pending' }).populate('userId', 'username');
+    res.json({ message: 'Pending leave requests fetched successfully', leaves });
+  } catch (err) {
+    console.error('Error fetching pending leave requests:', err);
+    res.status(500).json({ error: 'Server error', details: err.message });
+  }
+});
+
+// Approve or reject leave request
+router.patch('/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  // Validate status
+  if (!['approved', 'rejected'].includes(status)) {
+    return res.status(400).json({ error: 'Invalid status' });
+  }
+
+  try {
+    const leave = await Leave.findByIdAndUpdate(id, { status }, { new: true });
+    if (!leave) {
+      return res.status(404).json({ error: 'Leave request not found' });
+    }
+    console.log(`Leave request with ID ${id} updated to ${status}`);
+    res.json({ message: 'Leave request updated successfully', leave });
+  } catch (err) {
+    console.error('Error updating leave request:', err);
     res.status(500).json({ error: 'Server error', details: err.message });
   }
 });
