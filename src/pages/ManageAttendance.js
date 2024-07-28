@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, Box, Button, Grid, List, ListItem, ListItemText, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper } from '@mui/material';
+import { Container, Typography, Box, Button, List, ListItem, ListItemText, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Paper } from '@mui/material';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from 'react-router-dom';
 
 const ManageAttendance = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +15,7 @@ const ManageAttendance = () => {
   const [openDetailDialog, setOpenDetailDialog] = useState(false);
   const [currentUserDetails, setCurrentUserDetails] = useState(null);
   const [role, setRole] = useState(''); // State for user role
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
     const fetchRole = async () => {
@@ -82,6 +84,10 @@ const ManageAttendance = () => {
     }
   };
 
+  const handleBackToDashboard = () => {
+    navigate('/admin-dashboard'); // Navigate back to the Admin Dashboard
+  };
+
   return (
     <Container component="main" maxWidth="md">
       <Box textAlign="center" mb={4}>
@@ -92,75 +98,78 @@ const ManageAttendance = () => {
           Select a user to view and manage their attendance records.
         </Typography>
       </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="h6">Users</Typography>
-          <List>
-            {users.map((user, index) => (
-              <ListItem
-                key={user._id}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  mb: 1,
-                  p: 1,
-                  borderRadius: 1,
-                  boxShadow: 0,
-                  bgcolor: 'transparent'
-                }}
+      <List>
+        {users.map((user, index) => (
+          <ListItem
+            key={user._id}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              mb: 1,
+              p: 1,
+              borderRadius: 1,
+              boxShadow: 0,
+              bgcolor: 'transparent'
+            }}
+          >
+            <Paper
+              elevation={3}
+              sx={{
+                flexGrow: 1,
+                p: 1,
+                borderRadius: 1,
+                boxShadow: 2,
+                bgcolor: 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                minWidth: 300,
+                position: 'relative'
+              }}
+            >
+              <Typography variant="body1" sx={{ flexGrow: 1 }}>
+                {`${index + 1}. ${user.firstName} ${user.lastName}`}
+              </Typography>
+              <IconButton
+                edge="end"
+                aria-label="info"
+                onClick={() => handleDetailClick(user._id)}
+                sx={{ position: 'absolute', right: 8, color: '#2074d4' }}
+                title="Show Details"
               >
-                <Paper
-                  elevation={3}
-                  sx={{
-                    flexGrow: 1,
-                    p: 1,
-                    borderRadius: 1,
-                    boxShadow: 2,
-                    bgcolor: 'transparent',
-                    display: 'flex',
-                    alignItems: 'center',
-                    minWidth: 300, // Increased length
-                    position: 'relative'
-                  }}
-                >
-                  <Typography variant="body1" sx={{ flexGrow: 1 }}>
-                    {`${index + 1}. ${user.username}`}
-                  </Typography>
-                  <IconButton
-                    edge="end"
-                    aria-label="info"
-                    onClick={() => handleDetailClick(user._id)}
-                    sx={{ position: 'absolute', right: 8, color: '#2074d4' }} // Adjusted position and color
-                    title="Show Details"
-                  >
-                    <InfoIcon />
-                  </IconButton>
-                </Paper>
+                <InfoIcon />
+              </IconButton>
+            </Paper>
+          </ListItem>
+        ))}
+      </List>
+      {selectedUser && (
+        <>
+          <Typography variant="h6" mb={2}>Attendance Records</Typography>
+          <List>
+            {attendanceRecords.map(record => (
+              <ListItem key={record._id}>
+                <ListItemText primary={`Date: ${record.date} - Time: ${new Date(record.timestamp).toLocaleTimeString()}`} />
+                <IconButton edge="end" aria-label="edit" onClick={() => handleEditClick(record._id)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteClick(record._id)}>
+                  <DeleteIcon />
+                </IconButton>
               </ListItem>
             ))}
           </List>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          {selectedUser && (
-            <>
-              <Typography variant="h6">Attendance Records</Typography>
-              <List>
-                {attendanceRecords.map(record => (
-                  <ListItem key={record._id}>
-                    <ListItemText primary={`Date: ${record.date} - Time: ${new Date(record.timestamp).toLocaleTimeString()}`} />
-                    <IconButton edge="end" aria-label="edit" onClick={() => handleEditClick(record._id)}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteClick(record._id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItem>
-                ))}
-              </List>
-            </>
-          )}
-        </Grid>
-      </Grid>
+          <Box textAlign="center" mt={4}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleBackToDashboard}
+              sx={{ width: '100%' }}
+            >
+              Back to Dashboard
+            </Button>
+          </Box>
+        </>
+      )}
 
       {/* Delete Confirmation Dialog */}
       <Dialog

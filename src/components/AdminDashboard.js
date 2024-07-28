@@ -26,7 +26,7 @@ const AdminDashboard = () => {
         <Grid item>
           <Button
             component={Link}
-            to="/view-student-records"
+            to="/view-student-record"
             variant="contained"
             color="primary"
             style={buttonStyle}

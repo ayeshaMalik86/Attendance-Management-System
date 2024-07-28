@@ -13,8 +13,9 @@ import AttendanceRecords from './components/AttendanceRecord';
 import LeaveRequests from './pages/LeaveRequests'; // Import LeaveRequests component
 import Layout from './components/Layout'; // Import Layout
 import Profile from './pages/Profile';
-import ManageAttendance from './components/ManageAttendance';
+import ManageAttendance from './pages/ManageAttendance';
 import LeaveApproval from './pages/LeaveApproval';
+import ViewStudentRecord from './pages/ViewStudentRecord';
 
 const theme = createTheme({
   palette: {
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/profile" element={<ProtectedRoute element={Profile} />} />
             <Route path="/manage-attendance" element={<ProtectedRoute element={ManageAttendance} />} />
             <Route path="/leave-approval" element={<ProtectedRoute element={LeaveApproval} />} />
+            <Route path="/view-student-record" element={<ProtectedRoute element={ViewStudentRecord} />} />
           </Routes>
         </Layout>
       </Router>

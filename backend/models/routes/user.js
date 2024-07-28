@@ -1,16 +1,56 @@
 const express = require('express');
-const User = require('../User'); // Adjust path if necessary
+const User = require('../User'); // Adjust the path to the User model if necessary
 const router = express.Router();
 
 // Get all users excluding admins
 router.get('/', async (req, res) => {
-  console.log('Received request for /api/user'); // Debugging statement
   try {
-    const users = await User.find({ role: { $ne: 'admin' } }, 'username'); // Exclude admin users
-    console.log('Users fetched successfully:', users); // Debugging statement
+    // Fetch all users excluding admins and return all fields
+    const users = await User.find({ role: { $ne: 'admin' } });
     res.json(users);
   } catch (err) {
-    console.error('Error fetching users:', err); // Debugging statement
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Get a specific user by ID
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Update a specific user by ID
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, birthday, username, email, phoneNumber } = req.body;
+
+  try {
+    const user = await User.findByIdAndUpdate(
+      id,
+      { firstName, lastName, birthday, username, email, phoneNumber },
+      { new: true, runValidators: true }
+    );
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Delete a specific user by ID
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
     res.status(500).json({ error: 'Server error' });
   }
 });
