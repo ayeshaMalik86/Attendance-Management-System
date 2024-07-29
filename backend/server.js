@@ -5,6 +5,7 @@ const authRoutes = require('./models/routes/auth'); // Correct path
 const attendanceRoutes = require('./models/routes/attendance'); // Correct path
 const leaveRoutes = require('./models/routes/leave');
 const userRoutes = require('./models/routes/user'); // Correct path
+const gradingRoutes = require('./models/routes/grading');
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(express.json()); // Middleware to parse JSON requests
 app.use('/api/auth', authRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/leave', leaveRoutes);
-app.use('/api/user', userRoutes); // Ensure this path is correct
+app.use('/api/user', userRoutes); 
+app.use('/api/grading', gradingRoutes)
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://afomalik86:haalim123@cluster0.9tcmqrw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {

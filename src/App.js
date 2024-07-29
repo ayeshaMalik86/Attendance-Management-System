@@ -16,6 +16,8 @@ import Profile from './pages/Profile';
 import ManageAttendance from './pages/ManageAttendance';
 import LeaveApproval from './pages/LeaveApproval';
 import ViewStudentRecord from './pages/ViewStudentRecord';
+import GradingSystem from './pages/GradingSystem';
+import GenerateReports from './pages/GenerateReports';
 
 const theme = createTheme({
   palette: {
@@ -50,6 +52,8 @@ const App = () => {
             <Route path="/manage-attendance" element={<ProtectedRoute element={ManageAttendance} />} />
             <Route path="/leave-approval" element={<ProtectedRoute element={LeaveApproval} />} />
             <Route path="/view-student-record" element={<ProtectedRoute element={ViewStudentRecord} />} />
+            <Route path="/grading-system" element={<ProtectedRoute element={GradingSystem} />} />
+            <Route path="/generate-reports" element={<ProtectedRoute element={GenerateReports} />} />
           </Routes>
         </Layout>
       </Router>
