@@ -1,11 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const authRoutes = require('./models/routes/auth'); // Correct path
-const attendanceRoutes = require('./models/routes/attendance'); // Correct path
+const authRoutes = require('./models/routes/auth'); // Ensure path is correct
+const attendanceRoutes = require('./models/routes/attendance'); // Ensure path is correct
 const leaveRoutes = require('./models/routes/leave');
-const userRoutes = require('./models/routes/user'); // Correct path
-const gradingRoutes = require('./models/routes/grading');
+const userRoutes = require('./models/routes/user'); // Ensure path is correct
+const gradingRoutes = require('./models/routes/grading'); // Ensure path is correct
 
 const app = express();
 
@@ -17,8 +17,8 @@ app.use(express.json()); // Middleware to parse JSON requests
 app.use('/api/auth', authRoutes);
 app.use('/api/attendance', attendanceRoutes);
 app.use('/api/leave', leaveRoutes);
-app.use('/api/user', userRoutes); 
-app.use('/api/grading', gradingRoutes)
+app.use('/api/user', userRoutes); // Ensure this matches the route file
+app.use('/api/grading', gradingRoutes); // Ensure this matches the route file
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://afomalik86:haalim123@cluster0.9tcmqrw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {

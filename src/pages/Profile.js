@@ -34,7 +34,7 @@ const Profile = () => {
       </Typography>
       <Box
         component="div"
-        style={{ width: '100%', maxWidth: '400px', textAlign: 'center' }}
+        style={{ width: '100%', maxWidth: '400px', textAlign: 'center', padding: '1rem' }}
       >
         <Typography variant="h6" gutterBottom>
           Username: {username}
@@ -44,7 +44,7 @@ const Profile = () => {
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ mt: 2 }}
+          style={{ marginTop: '1rem' }}
         >
           Sign Out
         </Button>

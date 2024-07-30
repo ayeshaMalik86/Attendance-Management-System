@@ -1,11 +1,10 @@
 const express = require('express');
-const User = require('../User'); // Adjust the path to the User model if necessary
+const User = require('../User'); // Ensure this path is correct
 const router = express.Router();
 
 // Get all users excluding admins
 router.get('/', async (req, res) => {
   try {
-    // Fetch all users excluding admins and return all fields
     const users = await User.find({ role: { $ne: 'admin' } });
     res.json(users);
   } catch (err) {

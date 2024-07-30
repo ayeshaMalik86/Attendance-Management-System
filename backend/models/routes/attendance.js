@@ -1,5 +1,3 @@
-// backend/models/routes/attendance.js
-
 const express = require('express');
 const router = express.Router();
 const Attendance = require('../../models/Attendance'); // Ensure this path is correct
@@ -35,6 +33,9 @@ router.post('/mark', async (req, res) => {
   console.log('Received request to mark attendance');
   try {
     const userId = req.body.userId;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
     const today = new Date().toISOString().split('T')[0];
     console.log(`Marking attendance for user: ${userId} on date: ${today}`);
     const existingAttendance = await Attendance.findOne({ userId: userId, date: today });
@@ -47,7 +48,7 @@ router.post('/mark', async (req, res) => {
     const newAttendance = new Attendance({
       userId: userId,
       date: today,
-      timestamp: new Date()
+      timestamp: new Date() // Include timestamp
     });
 
     await newAttendance.save();
@@ -87,6 +88,33 @@ router.get('/records', async (req, res) => {
     res.json(recordsWithUsername);
   } catch (err) {
     console.error('Error fetching attendance records:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Fetch attendance records for the past two months
+router.get('/records/past-two-months', async (req, res) => {
+  console.log('Received request to fetch attendance records for the past two months');
+  try {
+    const userId = req.query.userId;
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    const today = new Date();
+    const twoMonthsAgo = new Date(today.setMonth(today.getMonth() - 2));
+    const startDate = twoMonthsAgo.toISOString().split('T')[0];
+    const endDate = new Date().toISOString().split('T')[0];
+
+    const records = await Attendance.find({
+      userId: userId,
+      date: { $gte: startDate, $lte: endDate }
+    });
+
+    console.log(`Fetched ${records.length} attendance records for the past two months for user: ${userId}`);
+    res.json(records);
+  } catch (err) {
+    console.error('Error fetching attendance records for the past two months:', err);
     res.status(500).json({ error: 'Server error' });
   }
 });

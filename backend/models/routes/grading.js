@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const GradingCriteria = require('../GradingCriteria'); // Ensure the path is correct
+const GradingCriteria = require('../GradingCriteria'); // Ensure this path is correct
 
 const defaultGradingCriteria = {
   A: 85,
@@ -23,7 +23,6 @@ router.get('/grading-criteria', async (req, res) => {
     if (!criteria) {
       criteria = await GradingCriteria.create(defaultGradingCriteria);
     }
-    // Convert to plain object and exclude _id
     const criteriaObject = criteria.toObject();
     delete criteriaObject._id;
     res.json(criteriaObject);
@@ -38,7 +37,6 @@ router.put('/grading-criteria', async (req, res) => {
   try {
     const newCriteria = req.body;
     const criteria = await GradingCriteria.findOneAndUpdate({}, newCriteria, { new: true, upsert: true });
-    // Convert to plain object and exclude _id
     const criteriaObject = criteria.toObject();
     delete criteriaObject._id;
     res.json(criteriaObject);
